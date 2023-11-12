@@ -71,18 +71,19 @@ export default function SiteInfoForm() {
 
     setLoading(true);
     try {
-      const response = await fetch('http://18.190.160.90:8001/api?zipcode=' + zipCode + '&input=' + groundType);
+      const response = await fetch('https://18.190.160.90:8001/api?zipcode=' + zipCode + '&input=' + groundType);
       if (!response.ok) {
         throw new Error('Network response was not ok.');
       }
       const result = await response.json();
       setData(result);
+      setLoading(false);
     } catch (error) {
-      setFormError(error);
+      setFormError(String(error));
+      setLoading(false);
       return;
     }
-    setLoading(false);
-
+    
     // Reset form error
     setFormError('');
     
