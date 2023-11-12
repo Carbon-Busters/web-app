@@ -46,7 +46,7 @@ export default function ProjectSummary({
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="body">
-                  Your solar project located in postal code {zipCode} is being developed on a surface that is {groundType}. {desc} The expected overall albedo is
+                  Your solar project located in postal code {zipCode} is being developed on a surface that is {groundType}. {data.desc} The expected overall albedo is
                 </Typography>
                 <Typography variant="body">
                   &nbsp;
