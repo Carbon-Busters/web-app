@@ -13,16 +13,17 @@ export default function ProjectSummary({
   annualKWh,
   pricePerBifacial,
   pricePerMonofacial,
-  albedo,
+  data,
 }) {
   const [isBack, setBack] = useState(false);
 
   const handleBack = (event) => {
     setBack(true);
   }
-  const position = [42.48, -83.48];
+  console.log(data);
+  const position = [Number(data.lat), Number(data.long)];
   const baseline = 1900;
-  const addedEfficiency = albedo * 0.6 * 0.8;
+  const addedEfficiency = data.albedo * 0.6 * 0.8;
   const numBifacial = Math.ceil(annualKWh / ((1 + addedEfficiency) * baseline));
   const numMonofacial = Math.ceil(annualKWh / baseline);
   const costBifacialPanels = numBifacial * pricePerBifacial;
@@ -45,13 +46,13 @@ export default function ProjectSummary({
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="body">
-                  Your solar project located in postal code {zipCode} is being developed on a surface that is {groundType}. The expected overall albedo is
+                  Your solar project located in postal code {zipCode} is being developed on a surface that is {groundType}. {desc} The expected overall albedo is
                 </Typography>
                 <Typography variant="body">
                   &nbsp;
                 </Typography>
                 <Typography variant="body" color="primary">
-                  <b>{albedo}</b>.
+                  <b>{data.albedo}</b>.
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -96,7 +97,7 @@ export default function ProjectSummary({
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body">
-                  For the number bifacial solar panels, this will cost 
+                  For the number of bifacial solar panels, this will cost 
                 </Typography>
                 <Typography variant="body">
                   &nbsp;
@@ -108,7 +109,7 @@ export default function ProjectSummary({
                   &nbsp;
                 </Typography>
                 <Typography variant="body">
-                  For the number monofacial solar panels, this will cost 
+                  For the number of monofacial solar panels, this will cost 
                 </Typography>
                 <Typography variant="body">
                   &nbsp;

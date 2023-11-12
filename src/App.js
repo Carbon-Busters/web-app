@@ -35,7 +35,7 @@ export default function App() {
           <SiteInfoForm/>
         </Paper>
         <Typography variant="body2" color="text.secondary" align="center">
-          {'Copyright © Radiant '}
+          {'Copyright © Carbon Busters '}
           {new Date().getFullYear()}
           {'.'}
         </Typography>

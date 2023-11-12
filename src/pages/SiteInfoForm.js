@@ -10,6 +10,7 @@ import {
   Grid,
   FormHelperText,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 import ProjectSummary from './ProjectSummary';
 
@@ -50,8 +51,10 @@ export default function SiteInfoForm() {
   const [pricePerBifacial, setPricePerBifacial] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formError, setFormError] = useState('');
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Basic validation
@@ -66,8 +69,24 @@ export default function SiteInfoForm() {
       return;
     }
 
+    setLoading(true);
+    try {
+      const response = await fetch('http://18.190.160.90:8001/api?zipcode=' + zipCode + '&input=' + groundType);
+      if (!response.ok) {
+        throw new Error('Network response was not ok.');
+      }
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      setFormError(error);
+      return;
+    }
+    setLoading(false);
+
     // Reset form error
     setFormError('');
+    
+    
 
     // Perform actions with the form data (e.g., submit to a server)
     console.log({
@@ -81,8 +100,16 @@ export default function SiteInfoForm() {
     setIsSubmitted(true);
   };
 
+  if (loading) {
+    return (
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <CircularProgress/>
+      </div>
+    );
+  }
+
   if (isSubmitted) {
-    return <ProjectSummary zipCode={zipCode} groundType={groundType} annualKWh={Number(annualKWh)} pricePerBifacial={Number(pricePerBifacial)} pricePerMonofacial={Number(pricePerMonofacial)} albedo={0.5}/>;
+    return <ProjectSummary zipCode={zipCode} groundType={groundType} annualKWh={Number(annualKWh)} pricePerBifacial={Number(pricePerBifacial)} pricePerMonofacial={Number(pricePerMonofacial)} data={data}/>;
   } else {
     return (
       <Container>
