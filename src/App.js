@@ -22,7 +22,7 @@ export default function App() {
       >
         <Toolbar>
           <Typography variant="h4" color="white" noWrap>
-            RADIANT
+            RADIANT𖤓
           </Typography>
         </Toolbar>
       </AppBar>
